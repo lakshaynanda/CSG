@@ -1,54 +1,147 @@
 <template>
   <div>
+    <div class="title">
+      <h1>CSG Skills Assessment</h1> 
+      <hr class="line">
+    </div>
+    <br>
+    <p class="align-left">Please review your Information before submitting</p>
     <div class="hello">
-      <b-form @submit="onSubmit" @reset="onReset" v-if="show">
-        <b-form-group
-          id="input-group-1"
-          label="Email address:"
-          label-for="input-1"
-          description="We'll never share your email with anyone else."
-        >
-          <b-form-input
-            id="input-1"
-            v-model="form.email"
-            type="email"
-            placeholder="Enter email"
-            required
-          ></b-form-input>
-        </b-form-group>
+      <b-card bg-variant="light">
+        <b-card-header header-tag="header" class="p-1" role="tab">
+          <b-button block v-b-toggle.accordion-1 variant="info">Personal Information</b-button>
+        </b-card-header>
+        <b-collapse id="accordion-1" visible accordion="my-accordion1" role="tabpanel">
+          <b-card-body>
+            <!-- <b-form-group
+              label-cols-lg="3"
+              label="Personal Information"
+              label-size="lg"
+              label-class="font-weight-bold pt-0"
+              class="mb-0"
+            > -->
+            <b-icon v-if="!editable" style="float:right; margin: 9%" class="button" icon="pencil-square" @click="editable = true"></b-icon>
+            <b-icon v-if="editable" style="float:right; margin: 9%" class="button" icon="check2" @click="editable = false"></b-icon>
+              <b-form-group
+                label="Name:"
+                label-for="nested-street"
+                label-cols-sm="3"
+                label-align-sm="right"
+              >
+                <b-form-input v-if="editable" v-model="form.name" id="nested-street"></b-form-input>
+                <p v-else>{{ form.name }}</p>
+              </b-form-group>
 
-        <b-form-group id="input-group-2" label="Your Name:" label-for="input-2">
-          <b-form-input
-            id="input-2"
-            v-model="form.name"
-            placeholder="Enter name"
-            required
-          ></b-form-input>
-        </b-form-group>
+              <b-form-group
+                label="Rank:"
+                label-for="nested-city"
+                label-cols-sm="3"
+                label-align-sm="right"
+              >
+                <b-form-input v-if="editable" v-model="form.rank" id="nested-city"></b-form-input>
+                <p v-else>{{ form.rank }}</p>
+              </b-form-group>
 
-        <b-form-group id="input-group-3" label="Food:" label-for="input-3">
-          <b-form-select
-            id="input-3"
-            v-model="form.food"
-            :options="foods"
-            required
-          ></b-form-select>
-        </b-form-group>
+              <b-form-group
+                label="Age:"
+                label-for="nested-state"
+                label-cols-sm="3"
+                label-align-sm="right"
+              >
+                <b-form-input v-if="editable" v-model="form.age" id="nested-state"></b-form-input>
+                <p v-else>{{ form.age }}</p>
+              </b-form-group>
 
-        <b-form-group id="input-group-4" v-slot="{ ariaDescribedby }">
-          <b-form-checkbox-group
-            v-model="form.checked"
-            id="checkboxes-4"
-            :aria-describedby="ariaDescribedby"
+              <b-form-group
+                label="Current Duty:"
+                label-for="nested-country"
+                label-cols-sm="3"
+                label-align-sm="right"
+              >
+                <b-form-input v-if="editable" v-model="form.duty" id="nested-country"></b-form-input>
+                <p v-else>{{ form.duty }}</p>
+              </b-form-group>
+            <!-- </b-form-group> -->
+          </b-card-body>
+      </b-collapse>
+        
+      </b-card>
+      <br>
+      <b-card bg-variant="light">
+        <b-card-header header-tag="header" class="p-1" role="tab">
+          <b-button block v-b-toggle.accordion-2 variant="info">Skills Information</b-button>
+        </b-card-header>
+        <b-collapse id="accordion-2" visible accordion="my-accordion2" role="tabpanel">
+          <b-card-body>
+            <b-icon v-if="!editable2" style="float:right; margin: 9%" class="button" icon="pencil-square" @click="editable2 = true"></b-icon>
+        <b-icon v-if="editable2" style="float:right; margin: 9%" class="button" icon="check2" @click="editable2 = false"></b-icon>
+          <b-form-group
+            label="Tactics, Techniques and Procedures:"
+            label-for="nested-street"
+            label-cols-sm="3"
+            v-slot="{ ariaDescribedby1 }"
+            label-align-sm="right"
           >
-            <b-form-checkbox value="me">Check me out</b-form-checkbox>
-            <b-form-checkbox value="that">Check that out</b-form-checkbox>
-          </b-form-checkbox-group>
-        </b-form-group>
+            <b-form-radio-group
+              v-if="editable2"
+              id="radio-group-1"
+              v-model="form.tac"
+              :options="options"
+              :aria-describedby="ariaDescribedby1"
+              name="radio-options"
+            ></b-form-radio-group>
+            <p v-else>{{ form.tac }}</p>
+          </b-form-group>
 
-        <b-button type="submit" variant="primary">Submit</b-button>
-        <b-button type="reset" variant="danger">Reset</b-button>
-      </b-form>
+          <b-form-group
+            label="Ability to perform coordinated actions to LoE"
+            label-for="nested-city"
+            v-slot="{ ariaDescribedby2 }"
+            label-cols-sm="3"
+            label-align-sm="right"
+          >
+            <b-form-radio-group
+              v-if="editable2"
+              id="radio-group-2"
+              v-model="form.loe"
+              :options="options"
+              :aria-describedby="ariaDescribedby2"
+              name="radio-options2"
+            ></b-form-radio-group>
+            <p v-else>{{ form.loe }}</p>
+          </b-form-group>
+
+          <b-form-group
+            label="Knowledge of California State's IT Roles and Requirements:"
+            label-for="nested-state"
+            v-slot="{ ariaDescribedby3 }"
+            label-cols-sm="3"
+            label-align-sm="right"
+          >
+            <b-form-radio-group
+              v-if="editable2"
+              id="radio-group-3"
+              v-model="form.it"
+              :options="options"
+              :aria-describedby="ariaDescribedby3"
+              name="radio-options3"
+            ></b-form-radio-group>
+            <p v-else>{{ form.it }}</p>
+          </b-form-group>
+          </b-card-body>
+        </b-collapse>
+        <!-- <b-form-group
+          label-cols-lg="3"
+          label="Skills Level"
+          label-size="lg"
+          label-class="font-weight-bold pt-0"
+          class="mb-0"
+        > -->
+        
+        <!-- </b-form-group> -->
+      </b-card>
+      <br>
+      <b-button variant="outline-primary">Submit</b-button>
       <b-card class="mt-3" header="Form Data Result">
         <pre class="m-0">{{ form }}</pre>
       </b-card>
@@ -61,17 +154,30 @@
 export default {
   data() {
       return {
+        editable: true,
+        editable2: true,
+        options: [
+          { text: 'None', value: 'None' },
+          { text: 'Novice', value: 'Novice' },
+          { text: 'Proficient', value: 'Proficient'},
+          { text: 'Expert', value: 'Expert' }
+        ],
         form: {
-          email: '',
+          age: '',
           name: '',
-          food: null,
-          checked: []
+          rank: '',
+          duty: '',
+          tac: '',
+          loe: '',
+          it: ''
         },
-        foods: [{ text: 'Select One', value: null }, 'Carrots', 'Beans', 'Tomatoes', 'Corn'],
         show: true
       }
     },
     methods: {
+      showN () {
+        console.log(this.name)
+      },
       onSubmit(event) {
         event.preventDefault()
         alert(JSON.stringify(this.form))
@@ -79,10 +185,10 @@ export default {
       onReset(event) {
         event.preventDefault()
         // Reset our form values
-        this.form.email = ''
+        this.form.age = ''
         this.form.name = ''
-        this.form.food = null
-        this.form.checked = []
+        this.form.duty = ''
+        this.form.rank = ''
         // Trick to reset/clear native browser form validation state
         this.show = false
         this.$nextTick(() => {
@@ -99,8 +205,18 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
+.button:hover {
+  cursor: pointer;
+}
+.align-left{
+  text-align: left;
+  margin: 0 10% 0 10%;
+}
 .hello {
-  margin: 10%;
+  margin: 3% 10% 10% 10%;
+}
+.line{
+  margin: 0 10% 0 10%;
 }
 h3 {
   margin: 40px 0 0;
