@@ -1,5 +1,39 @@
 <template>
   <div class="hello">
+      <div class="widgets">
+          <b-card-group deck>
+            <b-card
+            header="Count Service Members"
+            header-tag="header"
+            >
+            <b-card-text>{{ serviceMem }}</b-card-text>
+            </b-card>
+
+            <b-card header-tag="header">
+            <template #header>
+                <h6 class="mb-0">Count Command Staff Members</h6>
+            </template>
+            <b-card-text>{{ commandStaff }}</b-card-text>
+            </b-card>
+
+            <b-card header-tag="header">
+            <template #header>
+                <h6 class="mb-0">Count Training Team Members</h6>
+            </template>
+            <b-card-text>{{ trainingTeam }}</b-card-text>
+            </b-card>
+            
+        </b-card-group>
+        <!-- <b-card class="mt-3" header="Count Service Member">
+            {{ serviceMem }}
+        </b-card>
+        <b-card class="mt-3" header="Count Command Staff">
+            {{ commandStaff }}
+        </b-card>
+        <b-card class="mt-3" header="Count Training Team Member">
+            {{ trainingTeam }}
+        </b-card> -->
+      </div>
       <b-form inline>
         <label class="mr-sm-2" for="inline-form-input-name">Name = </label>
         <b-form-input
@@ -11,8 +45,6 @@
 
         <b-button class="bbut" variant="primary" @click="getServiceMemberInd">Search By Name</b-button>
         <!-- <b-button class="bbut" variant="danger" @click="getUserData">Reset</b-button> -->
-    </b-form>
-    <b-form inline>
         <label class="mr-sm-2" for="inline-form-custom-select-pref">Rank = </label>
         <b-form-select
         id="inline-form-custom-select-pref"
@@ -22,9 +54,6 @@
         :value="null"
         ></b-form-select>
         <b-button class="bbut" variant="primary" @click="getRank">Search By Rank</b-button>
-        <!-- <b-button class="bbut" variant="danger" @click="getUserData">Reset</b-button> -->
-    </b-form>
-    <b-form inline>
         <label class="mr-sm-2" for="inline-form-custom-select-pref">Skill = </label>
         <b-form-select
         id="inline-form-custom-select-pref"
@@ -43,6 +72,36 @@
         <b-button class="bbut" variant="primary" @click="getSkill">Search By Skill</b-button>
         <b-button class="bbut" variant="danger" @click="getUserData">Reset</b-button>
     </b-form>
+    <!-- <b-form inline>
+        <label class="mr-sm-2" for="inline-form-custom-select-pref">Rank = </label>
+        <b-form-select
+        id="inline-form-custom-select-pref"
+        class="mb-2 mr-sm-2 mb-sm-0"
+        :options="['Service Member', 'Training Team', 'Command Staff']"
+        v-model="rankVal"
+        :value="null"
+        ></b-form-select>
+        <b-button class="bbut" variant="primary" @click="getRank">Search By Rank</b-button>
+    </b-form> -->
+    <!-- <b-form inline>
+        <label class="mr-sm-2" for="inline-form-custom-select-pref">Skill = </label>
+        <b-form-select
+        id="inline-form-custom-select-pref"
+        class="mb-2 mr-sm-2 mb-sm-0"
+        :options="['loe__c', 'tac__c', 'it__c']"
+        v-model="skillChosen"
+        :value="null"
+        ></b-form-select> = 
+        <b-form-select
+        id="inline-form-custom-select-pref"
+        class="mb-2 mr-sm-2 mb-sm-0"
+        :options="['None', 'Novice', 'Proficient', 'Expert']"
+        v-model="skillVal"
+        :value="null"
+        ></b-form-select>
+        <b-button class="bbut" variant="primary" @click="getSkill">Search By Skill</b-button>
+        <b-button class="bbut" variant="danger" @click="getUserData">Reset</b-button>
+    </b-form> -->
       <!-- <b-form-group
         label="Name ="
         label-for="nested-street"
@@ -77,6 +136,9 @@ export default {
         editable: true,
         usersPresent: false,
         users: [],
+        serviceMem: '',
+        commandStaff: '',
+        trainingTeam: '',
         user: [],
         searchName: '',
         editable2: true,
@@ -87,7 +149,7 @@ export default {
         ranks: [
           { text: 'Name', value: 'Name' },
           { text: 'Command Staff', value: 'Command Staff' },
-          { text: 'Training Team Member', value: 'Training Team Member'}
+          { text: 'Training Team', value: 'Training Team'}
         ],
         options: [
           { text: 'None', value: 'None' },
@@ -110,6 +172,7 @@ export default {
     created() {
       this.autho()
       this.getUserData()
+      this.countsGet()
     },
     methods: {
       autho () {
@@ -142,6 +205,17 @@ export default {
           localStorage.setItem('user-token', response.data.access_token)
           console.log(localStorage.getItem('user-token'))
         });
+      },
+      countsGet() {
+        mainApi.getCountsService().then((response) => {
+            this.serviceMem = response.data.totalSize
+        })
+        mainApi.getCountsCommand().then((response) => {
+            this.commandStaff = response.data.totalSize
+        })
+        mainApi.getCountsTraining().then((response) => {
+            this.trainingTeam = response.data.totalSize
+        })
       },
       getServiceMemberInd() {
         mainApi.getServiceMemberByName(this.searchName).then((response) => {

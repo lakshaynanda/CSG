@@ -170,7 +170,7 @@ export default {
         ranks: [
           { text: 'Service Member', value: 'Service Member' },
           { text: 'Command Staff', value: 'Command Staff' },
-          { text: 'Training Team Member', value: 'Training Team'}
+          { text: 'Training Team', value: 'Training Team'}
         ],
         options: [
           { text: 'None', value: 'None' },
