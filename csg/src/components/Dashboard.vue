@@ -2,25 +2,25 @@
   <div class="hello">
       <div class="widgets">
           <b-card-group deck>
-            <b-card
-            header="Count Service Members"
-            header-tag="header"
-            >
-            <b-card-text>{{ serviceMem }}</b-card-text>
+            <b-card header-tag="header">
+            <template #header>
+                <h6 class="mb-0">Count Service Member</h6>
+            </template>
+            <b-card-text><h1 style="color: Blue">{{ serviceMem }}</h1></b-card-text>
             </b-card>
 
             <b-card header-tag="header">
             <template #header>
                 <h6 class="mb-0">Count Command Staff Members</h6>
             </template>
-            <b-card-text>{{ commandStaff }}</b-card-text>
+            <b-card-text><h1 style="color: green">{{ commandStaff }}</h1></b-card-text>
             </b-card>
 
             <b-card header-tag="header">
             <template #header>
                 <h6 class="mb-0">Count Training Team Members</h6>
             </template>
-            <b-card-text>{{ trainingTeam }}</b-card-text>
+            <b-card-text><h1 style="color: red">{{ trainingTeam }}</h1></b-card-text>
             </b-card>
             
         </b-card-group>
