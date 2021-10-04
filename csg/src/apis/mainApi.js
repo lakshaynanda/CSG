@@ -5,6 +5,18 @@ export default class UserForm {
     return http.get('data/v52.0/query?q=SELECT Name,AGE__c, RANK__c, DUTY__c, TAC__c, LOE__c, IT__c  From ServiceMember__c')
   }
 
+  static getRankList (rankVal) {
+    return http.get("data/v52.0/query?q=SELECT Name,AGE__c, RANK__c, DUTY__c, TAC__c, LOE__c, IT__c  From ServiceMember__c WHERE RANK__c ='"+ rankVal +"'")
+  }
+
+  static getSkillsList (skill, val) {
+    return http.get("data/v52.0/query?q=SELECT Name,AGE__c, RANK__c, DUTY__c, TAC__c, LOE__c, IT__c  From ServiceMember__c WHERE "+ skill +" ='"+ val +"'")
+  }
+
+  static getServiceMemberByName (nameSearch) {
+    return http.get("data/v52.0/query?q=SELECT Name,AGE__c, RANK__c, DUTY__c, TAC__c, LOE__c, IT__c  From ServiceMember__c WHERE Name = '"+ nameSearch +"'")
+  }
+
   static getAuth (data) {
       if (data) {
         return http.post('oauth2/token', data)

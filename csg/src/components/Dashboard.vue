@@ -1,8 +1,69 @@
 <template>
-  <div>
-    Hello Worlds
+  <div class="hello">
+      <b-form inline>
+        <label class="mr-sm-2" for="inline-form-input-name">Name = </label>
+        <b-form-input
+        id="inline-form-input-name"
+        class="mb-2 mr-sm-2 mb-sm-0"
+        placeholder="Enter name"
+        v-model="searchName"
+        ></b-form-input>
+
+        <b-button class="bbut" variant="primary" @click="getServiceMemberInd">Search By Name</b-button>
+        <!-- <b-button class="bbut" variant="danger" @click="getUserData">Reset</b-button> -->
+    </b-form>
+    <b-form inline>
+        <label class="mr-sm-2" for="inline-form-custom-select-pref">Rank = </label>
+        <b-form-select
+        id="inline-form-custom-select-pref"
+        class="mb-2 mr-sm-2 mb-sm-0"
+        :options="['Service Member', 'Training Team', 'Command Staff']"
+        v-model="rankVal"
+        :value="null"
+        ></b-form-select>
+        <b-button class="bbut" variant="primary" @click="getRank">Search By Rank</b-button>
+        <!-- <b-button class="bbut" variant="danger" @click="getUserData">Reset</b-button> -->
+    </b-form>
+    <b-form inline>
+        <label class="mr-sm-2" for="inline-form-custom-select-pref">Skill = </label>
+        <b-form-select
+        id="inline-form-custom-select-pref"
+        class="mb-2 mr-sm-2 mb-sm-0"
+        :options="['loe__c', 'tac__c', 'it__c']"
+        v-model="skillChosen"
+        :value="null"
+        ></b-form-select> = 
+        <b-form-select
+        id="inline-form-custom-select-pref"
+        class="mb-2 mr-sm-2 mb-sm-0"
+        :options="['None', 'Novice', 'Proficient', 'Expert']"
+        v-model="skillVal"
+        :value="null"
+        ></b-form-select>
+        <b-button class="bbut" variant="primary" @click="getSkill">Search By Skill</b-button>
+        <b-button class="bbut" variant="danger" @click="getUserData">Reset</b-button>
+    </b-form>
+      <!-- <b-form-group
+        label="Name ="
+        label-for="nested-street"
+        label-cols-sm="1"
+        label-align-sm="right"
+        style="margin:0 25% 0 25%"
+        > -->
+        <!-- "Name":"Srirag","Age__c":24.0,"Rank__c":"Service Member","Duty__c":"Active","TAC__c":"Expert","LoE__c":"Proficient","IT__c":"Novice"} -->
+        <!-- <b-form-input v-model="searchName" id="nested-street" class="inputBox"></b-form-input> -->
+        <!-- <b-form-select v-model="searchName" :options="allFields" id="nested-street"></b-form-select> -->
+        <!-- <b-button variant="outline-primary" @click="getServiceMemberInd">Search</b-button> -->
+        <!-- <p v-else>{{ form.name }}</p> -->
+      <!-- </b-form-group> -->
+      
+      <!-- <b-button variant="outline-primary" @click="getUserData" class="">Reset Table</b-button> -->
+      <b-card class="mt-3" header="Form Data Result">
+        <!-- <pre v-if="usersPresent" class="m-0">Name: {{ user.Name }} Age:{{ user.Age__c }} Rank: {{ user.Rank__c }} Duty: {{ user.Duty__c }} TAC: {{ user.TAC__c }} LOE:{{ user.LoE__c }} IT:{{ user.IT__c }}</pre>
+        <pre v-else class="m-0">Service Member Does not Exist</pre> -->
+        <b-table striped hover :items="users" :fields="fields"></b-table>
+      </b-card>
   </div>
-  
 </template>
 
 <script>
@@ -16,7 +77,18 @@ export default {
         editable: true,
         usersPresent: false,
         users: [],
+        user: [],
+        searchName: '',
         editable2: true,
+        skillChosen: '',
+        skillVal: '',
+        rankVal: '',
+        fields: ['Name', 'Age__c', 'Duty__c', 'LoE__c', 'Rank__c', 'IT__c', 'TAC__c'],
+        ranks: [
+          { text: 'Name', value: 'Name' },
+          { text: 'Command Staff', value: 'Command Staff' },
+          { text: 'Training Team Member', value: 'Training Team Member'}
+        ],
         options: [
           { text: 'None', value: 'None' },
           { text: 'Novice', value: 'Novice' },
@@ -37,7 +109,7 @@ export default {
     },
     created() {
       this.autho()
-      // this.getUserData()
+      this.getUserData()
     },
     methods: {
       autho () {
@@ -70,6 +142,24 @@ export default {
           localStorage.setItem('user-token', response.data.access_token)
           console.log(localStorage.getItem('user-token'))
         });
+      },
+      getServiceMemberInd() {
+        mainApi.getServiceMemberByName(this.searchName).then((response) => {
+          this.usersPresent = true
+          this.users = response.data.records
+        })
+      },
+      getRank () {
+        mainApi.getRankList(this.rankVal).then((response) => {
+            this.usersPresent = true
+            this.users = response.data.records
+        })
+      },
+      getSkill () {
+        mainApi.getSkillsList(this.skillChosen, this.skillVal).then((response) => {
+            this.usersPresent = true
+            this.users = response.data.records
+        })
       },
       getUserData () {
         mainApi.getServiceMembers().then((response) => {
@@ -121,8 +211,17 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
+.bbut {
+    margin: 1%;
+}
+.hello {
+  margin: 3% 10% 10% 10%;
+}
 .button:hover {
   cursor: pointer;
+}
+.inputBox {
+    width: 70%;
 }
 .align-left{
   text-align: left;

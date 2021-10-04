@@ -38,7 +38,8 @@
                 label-cols-sm="3"
                 label-align-sm="right"
               >
-                <b-form-input v-if="editable" v-model="form.rank" id="nested-city"></b-form-input>
+                <b-form-select v-if="editable" v-model="form.rank" :options="ranks" id="nested-city"></b-form-select>
+                <!-- <b-form-input  v-model="form.rank" id="nested-city"></b-form-input> -->
                 <p v-else>{{ form.rank }}</p>
               </b-form-group>
 
@@ -142,7 +143,7 @@
       </b-card>
       <br>
       <b-button variant="outline-primary" @click="postUserData">Submit</b-button>
-      <b-button variant="outline-primary" @click="getUserData">Get Details</b-button>
+      <!-- <b-button variant="outline-primary" @click="getUserData">Get Details</b-button> -->
       <b-card v-if="usersPresent" class="mt-3" header="Form Data Result">
         <pre class="m-0">{{ users }}</pre>
       </b-card>
@@ -166,6 +167,11 @@ export default {
         usersPresent: false,
         users: [],
         editable2: true,
+        ranks: [
+          { text: 'Service Member', value: 'Service Member' },
+          { text: 'Command Staff', value: 'Command Staff' },
+          { text: 'Training Team Member', value: 'Training Team'}
+        ],
         options: [
           { text: 'None', value: 'None' },
           { text: 'Novice', value: 'Novice' },
