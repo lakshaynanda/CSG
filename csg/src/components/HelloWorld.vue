@@ -69,7 +69,7 @@
       <br>
       <b-card bg-variant="light">
         <b-card-header header-tag="header" class="p-1" role="tab">
-          <b-button block v-b-toggle.accordion-2 variant="info">Skills Information</b-button>
+          <b-button block v-b-toggle.accordion-2 variant="info">Cyber Analyst I - Skill Ratings</b-button>
         </b-card-header>
         <b-collapse id="accordion-2" visible accordion="my-accordion2" role="tabpanel">
           <b-card-body>
@@ -151,6 +151,8 @@
 </template>
 
 <script>
+import mainApi from '../apis/mainApi'
+import authApi from '../apis/auth'
 export default {
   data() {
       return {
@@ -174,7 +176,43 @@ export default {
         show: true
       }
     },
+    created() {
+      this.autho()
+      // this.getUserData()
+    },
     methods: {
+      autho () {
+        const data = {
+          grant_type: 'password',
+          client_id: '3MVG9Nk1FpUrSQHeLkBUh5k6Rv1yBzQBJrAMx9me7xnT4Zm2tBojknR8ob.sWc8HS18HiLuKaz67J8b7_x2SD',
+          client_secret: 'F8C3B6B6BF714D4F264D5F7545BDF9746F909843D894CF6DFB87A0E783CB491E',
+          username: 'csgprotect@gmail.com',
+          password: '21SC4sansrUWOMqRjbF2JQ4TR7kWGxHv3I'
+        }
+        authApi.getAuth(data.password, data.grant_type, data.client_id, data.client_secret, data.username).then((response) => {
+          localStorage.setItem('user-token', response.access_token)
+          console.log(localStorage.getItem('user-token'))
+        })
+      },
+      getUserData () {
+        mainApi.getServiceMembers().then((response) => {
+          console.log(response.data)
+        })
+      },
+      postUserData() {
+        const data = {
+          age: this.form.age,
+          name: this.form.name,
+          rank: this.form.rank,
+          duty: this.form.duty,
+          tac: this.form.tac,
+          loe: this.form.loe,
+          it: this.form.it
+        }
+        mainApi.postServiceMember(data).then((response) => {
+          console.log(response)
+        })
+      },
       showN () {
         console.log(this.name)
       },
