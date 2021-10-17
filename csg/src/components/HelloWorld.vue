@@ -20,10 +20,28 @@
               label-class="font-weight-bold pt-0"
               class="mb-0"
             > -->
-            <b-icon v-if="!editable" style="float:right; margin: 9%" class="button" icon="pencil-square" @click="editable = true"></b-icon>
-            <b-icon v-if="editable" style="float:right; margin: 9%" class="button" icon="check2" @click="editable = false"></b-icon>
+            <b-icon v-if="!editable" style="float:right; margin: 13%" class="button" icon="pencil-square" @click="editable = true"></b-icon>
+            <b-icon v-if="editable" style="float:right; margin: 13%" class="button" icon="check2" @click="editable = false"></b-icon>
               <b-form-group
-                label="Name:"
+                label="First Name:"
+                label-for="nested-street-1"
+                label-cols-sm="3"
+                label-align-sm="right"
+              >
+                <b-form-input v-if="editable" v-model="form.first_name" id="nested-street-1"></b-form-input>
+                <p v-else>{{ form.first_name }}</p>
+              </b-form-group>
+              <b-form-group
+                label="Last Name:"
+                label-for="nested-street-2"
+                label-cols-sm="3"
+                label-align-sm="right"
+              >
+                <b-form-input v-if="editable" v-model="form.last_name" id="nested-street-2"></b-form-input>
+                <p v-else>{{ form.last_name }}</p>
+              </b-form-group>
+              <b-form-group
+                label="Email:"
                 label-for="nested-street"
                 label-cols-sm="3"
                 label-align-sm="right"
@@ -31,7 +49,15 @@
                 <b-form-input v-if="editable" v-model="form.name" id="nested-street"></b-form-input>
                 <p v-else>{{ form.name }}</p>
               </b-form-group>
-
+              <b-form-group
+                label="Password:"
+                label-for="nested-street-4"
+                label-cols-sm="3"
+                label-align-sm="right"
+              >
+                <b-form-input v-if="editable" type="password" v-model="form.password" id="nested-street-4"></b-form-input>
+                <p v-else>{{ form.password }}</p>
+              </b-form-group>
               <b-form-group
                 label="Rank:"
                 label-for="nested-city"
@@ -59,7 +85,7 @@
                 label-cols-sm="3"
                 label-align-sm="right"
               >
-                <b-form-input v-if="editable" v-model="form.duty" id="nested-country"></b-form-input>
+                <b-form-select v-if="editable" :options="duties" v-model="form.duty" id="nested-country"></b-form-select>
                 <p v-else>{{ form.duty }}</p>
               </b-form-group>
             <!-- </b-form-group> -->
@@ -172,6 +198,10 @@ export default {
           { text: 'Command Staff', value: 'Command Staff' },
           { text: 'Training Team', value: 'Training Team'}
         ],
+        duties: [
+          { text: 'Active', value: 'Service Member' },
+          { text: 'Inactive', value: 'Command Staff' }
+        ],
         options: [
           { text: 'None', value: 'None' },
           { text: 'Novice', value: 'Novice' },
@@ -180,7 +210,10 @@ export default {
         ],
         form: {
           age: '',
+          first_name: '',
+          last_name: '',
           name: '',
+          password: '',
           rank: '',
           duty: '',
           tac: '',
@@ -196,17 +229,6 @@ export default {
     },
     methods: {
       autho () {
-        // const data = {
-        //   grant_type: 'password',
-        //   client_id: '3MVG9Nk1FpUrSQHeLkBUh5k6Rv1yBzQBJrAMx9me7xnT4Zm2tBojknR8ob.sWc8HS18HiLuKaz67J8b7_x2SD',
-        //   client_secret: 'F8C3B6B6BF714D4F264D5F7545BDF9746F909843D894CF6DFB87A0E783CB491E',
-        //   username: 'csgprotect@gmail.com',
-        //   password: '21SC4sansrUWOMqRjbF2JQ4TR7kWGxHv3I'
-        // }
-        // authApi.getAuth(data.password, data.grant_type, data.client_id, data.client_secret, data.username).then((response) => {
-        //   localStorage.setItem('user-token', response.access_token)
-        //   console.log(localStorage.getItem('user-token'))
-        // })
         axios({
           method: 'post',
           url: 'https://csg-cyber.my.salesforce.com/services/oauth2/token',
@@ -235,7 +257,10 @@ export default {
       postUserData() {
         const data = {
           age__c: this.form.age,
+          firstName__c: this.form.first_name,
+          lastName__c: this.form.last_name,
           name: this.form.name,
+          password__c: this.form.password,
           rank__c: this.form.rank,
           duty__c: this.form.duty,
           tac__c: this.form.tac,
