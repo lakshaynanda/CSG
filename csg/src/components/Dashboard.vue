@@ -1,27 +1,28 @@
 <template>
   <div class="hello">
-      <h1 style="margin-bottom: 2%;">Admin Dashboard</h1>
+      <b-button style="float: right; margin-right: 10%; background-color: #17C1FB" @click="redirectLogin">Logout</b-button>
+      <h1 style="margin-bottom: 2%; margin-left: 10%">Admin Dashboard</h1>
       <div class="widgets">
           <b-card-group deck>
             <b-card header-tag="header">
             <template #header>
                 <h6 class="mb-0">Count Service Member</h6>
             </template>
-            <b-card-text><h1 style="color: Blue">{{ serviceMem }}</h1></b-card-text>
+            <b-card-text><h1 style="color: white">{{ serviceMem }}</h1></b-card-text>
             </b-card>
 
             <b-card header-tag="header">
             <template #header>
                 <h6 class="mb-0">Count Command Staff Members</h6>
             </template>
-            <b-card-text><h1 style="color: green">{{ commandStaff }}</h1></b-card-text>
+            <b-card-text><h1 style="color: white">{{ commandStaff }}</h1></b-card-text>
             </b-card>
 
             <b-card header-tag="header">
             <template #header>
                 <h6 class="mb-0">Count Training Team Members</h6>
             </template>
-            <b-card-text><h1 style="color: red">{{ trainingTeam }}</h1></b-card-text>
+            <b-card-text><h1 style="color: white">{{ trainingTeam }}</h1></b-card-text>
             </b-card>
             
         </b-card-group>
@@ -35,44 +36,44 @@
             placeholder="Enter name"
             v-model="searchName"
             ></b-form-input>
-            <b-button class="bbut" variant="primary" @click="getServiceMemberInd">Search By Name</b-button>
+            <b-button class="bbut" style="background-color: #17C1FB" variant="primary" @click="getServiceMemberInd">Search By Name</b-button>
             <!-- <b-button v-if="!con1" class="bbut" variant="success" @click="con1 = !con1">AND</b-button>
             <b-button v-if="con1" class="bbut" variant="info" @click="con1 = !con1">OR</b-button> -->
             <label class="mr-sm-2" for="inline-form-custom-select-pref">Rank = </label>
-            <!-- <b-form-select
+            <b-form-select
             id="inline-form-custom-select-pref"
             class="mb-2 mr-sm-2 mb-sm-0"
             :options="['Service Member', 'Training Team', 'Command Staff']"
             v-model="rankVal"
             :value="null"
-            ></b-form-select> -->
-            <v-select v-model="rankVal" :options="['Service Member', 'Training Team', 'Command Staff']"></v-select>
-            <b-button class="bbut" variant="primary" @click="getRank">Search By Rank</b-button>
+            ></b-form-select>
+            <!-- <v-select v-model="rankVal" :options="['Service Member', 'Training Team', 'Command Staff']"></v-select> -->
+            <b-button class="bbut" style="background-color: #17C1FB" variant="primary" @click="getRank">Search By Rank</b-button>
             <!-- <b-button v-if="!con2" class="bbut" variant="success" @click="con2 = !con2">AND</b-button>
             <b-button v-if="con2" class="bbut" variant="info" @click="con2 = !con2">OR</b-button> -->
             <label class="mr-sm-2" for="inline-form-custom-select-pref">Skill = </label>
-            <!-- <b-form-select
+            <b-form-select
             id="inline-form-custom-select-pref"
             class="mb-2 mr-sm-2 mb-sm-0"
             :options="['loe__c', 'tac__c', 'it__c']"
             v-model="skillChosen"
             :value="null"
-            ></b-form-select> =  -->
-            <v-select v-model="skillChosen" :options="['loe__c', 'tac__c', 'it__c']"></v-select> =
-            <!-- <b-form-select
+            ></b-form-select> = 
+            <!-- <v-select v-model="skillChosen" :options="['loe__c', 'tac__c', 'it__c']"></v-select> = -->
+            <b-form-select
             id="inline-form-custom-select-pref"
             class="mb-2 mr-sm-2 mb-sm-0"
             :options="['None', 'Novice', 'Proficient', 'Expert']"
             v-model="skillVal"
             :value="null"
-            ></b-form-select> -->
-            <v-select v-model="skillVal" :options="['None', 'Novice', 'Proficient', 'Expert']"></v-select>
-            <b-button class="bbut" variant="primary" @click="getSkill">Search By Skill</b-button>
+            ></b-form-select>
+            <!-- <v-select v-model="skillVal" :options="['None', 'Novice', 'Proficient', 'Expert']"></v-select> -->
+            <b-button class="bbut" style="background-color: #17C1FB" variant="primary" @click="getSkill">Search By Skill</b-button>
             <b-button class="bbut" variant="danger" @click="getUserData">Reset</b-button>
         </b-form>
       </b-card>
       
-      <b-card class="mt-3" header="Form Data Result">
+      <b-card class="mt-3" style="color: white; font-weight: 80" header="Form Data Result">
         <!-- <pre v-if="usersPresent" class="m-0">Name: {{ user.Name }} Age:{{ user.Age__c }} Rank: {{ user.Rank__c }} Duty: {{ user.Duty__c }} TAC: {{ user.TAC__c }} LOE:{{ user.LoE__c }} IT:{{ user.IT__c }}</pre>
         <pre v-else class="m-0">Service Member Does not Exist</pre> -->
         <download-csv
@@ -81,7 +82,7 @@
             <!-- <img src="../assets/csv.png"> -->
             <b-button style="color: white; background: green">Export as CSV</b-button>
         </download-csv>
-        <b-table striped hover :items="users" :fields="fields"></b-table>
+        <b-table style="color: white" :items="users" :fields="fields"></b-table>
       </b-card>
   </div>
 </template>
@@ -144,6 +145,9 @@ export default {
       this.countsGet()
     },
     methods: {
+      redirectLogin () {
+        this.$router.push('/Login')
+      },
       getDataFiltered () {
         if (this.con1 == true) {
           this.condition1 = 'OR'
@@ -272,8 +276,32 @@ export default {
 .bbut {
     margin: 1%;
 }
+header.card-header{
+  background-color: #19365D;
+  border:1px solid #17C1FB;
+}
+.custom-control-label::before, .custom-file-label, .custom-select {
+  background-color: #2c3e50;
+}
+.card {
+  border: none;
+}
+
+div.card-body{
+  background-color: #19365D;
+}
+
+.card-header:first-child {
+  background-color: #19365D;
+  border: 1px solid #17C1FB;
+}
+
 .hello {
   margin: 3% 10% 10% 10%;
+  background-color: #072952;
+  padding: 30px;
+  border: 1px solid #17C1FB;
+  border-radius: 10px;
 }
 .button:hover {
   cursor: pointer;
@@ -287,6 +315,9 @@ export default {
 }
 .hello {
   margin: 3% 10% 10% 10%;
+}
+tbody{
+  color: white;
 }
 .line{
   margin: 0 10% 0 10%;
@@ -304,6 +335,48 @@ li {
 }
 a {
   color: #42b983;
+}
+tr{
+  color: white;
+}
+tr:hover {
+  color: white;
+}
+#inline-form-input-name {
+  background-color: #26405E;
+  border: none;
+  color: white;
+}
+div.v-select.vs--single.vs--searchable{
+  background: #27405E;
+  width: 130px;
+  color: white;
+}
+div.v-select.vs--single.vs--searchable.vs__selected-options{
+  background: #27405E;
+  width: 110px;
+  color: white;
+}
+svg.vs__open-indicator {
+  fill: white;
+}
+.vs__single .vs__selected{
+  color: white;
+}
+path{
+  color: white;
+}
+.vs__actions{
+  fill: white;
+}
+.vs__selected {
+  color: white;
+}
+.custom-control-label[data-v-aae30ed8]::before, .custom-file-label[data-v-aae30ed8], .custom-select[data-v-aae30ed8] {
+  color: white;
+  border: none;
+  background-color: #26405E;
+  width: 105px;
 }
 </style>
 

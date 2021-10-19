@@ -1,14 +1,14 @@
 <template>
-  <div class="bg">
-    <b-button style="float: right; margin-right: 10%; background-color: #17C1FB" @click="redirectLogin">Login</b-button>
+  <div>
+    <b-button style="float: right; margin-right: 10%; background-color: #17C1FB" @click="redirectLogin">Logout</b-button>
     <div class="title">
-      <h1 style="color: #17C1FB; margin-left: 10%">CSG Skills Assessment</h1> 
+      <h1 style="margin-left: 13%">Member Profile</h1> 
       <hr class="line">
     </div>
     <br>
-    <p v-if="submitted == false" class="">Please review your Information before submitting</p>
-    <p v-if="submitted == true" class="">Thank you for your response. Your response was recorded.</p>
-    <div class="hello" v-if="submitted == false">
+    <!-- <p v-if="submitted == false" class="align-left">Please review your Information before submitting</p> -->
+    <!-- <p>Thank you for submitting your response</p> -->
+    <div class="hello">
       <b-card bg-variant="light">
         <b-card-header header-tag="header" class="p-1" role="tab">
           <b-button block v-b-toggle.accordion-1 variant="info">Personal Information</b-button>
@@ -22,16 +22,16 @@
               label-class="font-weight-bold pt-0"
               class="mb-0"
             > -->
-            <b-icon v-if="!editable" style="float:right; margin: 13%" class="button" icon="pencil-square" @click="editable = true"></b-icon>
-            <b-icon v-if="editable" style="float:right; margin: 13%" class="button" icon="check2" @click="editable = false"></b-icon>
+            <!-- <b-icon v-if="!editable" style="float:right; margin: 13%" class="button" icon="pencil-square" @click="editable = true"></b-icon>
+            <b-icon v-if="editable" style="float:right; margin: 13%" class="button" icon="check2" @click="editable = false"></b-icon> -->
               <b-form-group
                 label="First Name:"
                 label-for="nested-street-1"
                 label-cols-sm="3"
                 label-align-sm="right"
               >
-                <b-form-input v-if="editable" v-model="form.first_name" id="nested-street-1"></b-form-input>
-                <p v-else>{{ form.first_name }}</p>
+                <!-- <b-form-input v-if="editable" v-model="form.first_name" id="nested-street-1"></b-form-input> -->
+                <p>{{ form.first_name }}</p>
               </b-form-group>
               <b-form-group
                 label="Last Name:"
@@ -39,8 +39,8 @@
                 label-cols-sm="3"
                 label-align-sm="right"
               >
-                <b-form-input v-if="editable" v-model="form.last_name" id="nested-street-2"></b-form-input>
-                <p v-else>{{ form.last_name }}</p>
+                <!-- <b-form-input v-if="editable" v-model="form.last_name" id="nested-street-2"></b-form-input> -->
+                <p>{{ form.last_name }}</p>
               </b-form-group>
               <b-form-group
                 label="Email:"
@@ -48,27 +48,27 @@
                 label-cols-sm="3"
                 label-align-sm="right"
               >
-                <b-form-input v-if="editable" v-model="form.name" id="nested-street"></b-form-input>
-                <p v-else>{{ form.name }}</p>
+                <!-- <b-form-input v-if="editable" v-model="form.name" id="nested-street"></b-form-input> -->
+                <p>{{ form.name }}</p>
               </b-form-group>
-              <b-form-group
+              <!-- <b-form-group
                 label="Password:"
                 label-for="nested-street-4"
                 label-cols-sm="3"
                 label-align-sm="right"
-              >
-                <b-form-input v-if="editable" type="password" v-model="form.password" id="nested-street-4"></b-form-input>
-                <p v-else>{{ form.password }}</p>
-              </b-form-group>
+              > -->
+                <!-- <b-form-input v-if="editable" type="password" v-model="form.password" id="nested-street-4"></b-form-input> -->
+                <!-- <p>{{ form.password }}</p> -->
+              <!-- </b-form-group> -->
               <b-form-group
                 label="Rank:"
                 label-for="nested-city"
                 label-cols-sm="3"
                 label-align-sm="right"
               >
-                <b-form-select v-if="editable" v-model="form.rank" :options="ranks" id="nested-city"></b-form-select>
+                <!-- <b-form-select v-if="editable" v-model="form.rank" :options="ranks" id="nested-city"></b-form-select> -->
                 <!-- <b-form-input  v-model="form.rank" id="nested-city"></b-form-input> -->
-                <p v-else>{{ form.rank }}</p>
+                <p>{{ form.rank }}</p>
               </b-form-group>
 
               <b-form-group
@@ -77,8 +77,8 @@
                 label-cols-sm="3"
                 label-align-sm="right"
               >
-                <b-form-input v-if="editable" v-model="form.age" id="nested-state"></b-form-input>
-                <p v-else>{{ form.age }}</p>
+                <!-- <b-form-input v-if="editable" v-model="form.age" id="nested-state"></b-form-input> -->
+                <p>{{ form.age }}</p>
               </b-form-group>
 
               <b-form-group
@@ -87,8 +87,8 @@
                 label-cols-sm="3"
                 label-align-sm="right"
               >
-                <b-form-select v-if="editable" :options="duties" v-model="form.duty" id="nested-country"></b-form-select>
-                <p v-else>{{ form.duty }}</p>
+                <!-- <b-form-select v-if="editable" :options="duties" v-model="form.duty" id="nested-country"></b-form-select> -->
+                <p>{{ form.duty }}</p>
               </b-form-group>
             <!-- </b-form-group> -->
           </b-card-body>
@@ -102,8 +102,8 @@
         </b-card-header>
         <b-collapse id="accordion-2" visible accordion="my-accordion2" role="tabpanel">
           <b-card-body>
-            <b-icon v-if="!editable2" style="float:right; margin: 9%" class="button" icon="pencil-square" @click="editable2 = true"></b-icon>
-        <b-icon v-if="editable2" style="float:right; margin: 9%" class="button" icon="check2" @click="editable2 = false"></b-icon>
+            <!-- <b-icon v-if="!editable2" style="float:right; margin: 9%" class="button" icon="pencil-square" @click="editable2 = true"></b-icon>
+        <b-icon v-if="editable2" style="float:right; margin: 9%" class="button" icon="check2" @click="editable2 = false"></b-icon> -->
           <b-form-group
             label="Tactics, Techniques and Procedures:"
             label-for="nested-street"
@@ -111,15 +111,15 @@
             v-slot="{ ariaDescribedby1 }"
             label-align-sm="right"
           >
-            <b-form-radio-group
+            <!-- <b-form-radio-group
               v-if="editable2"
               id="radio-group-1"
               v-model="form.tac"
               :options="options"
               :aria-describedby="ariaDescribedby1"
               name="radio-options"
-            ></b-form-radio-group>
-            <p v-else>{{ form.tac }}</p>
+            ></b-form-radio-group> -->
+            <p :aria-describedby="ariaDescribedby1">{{ form.tac }}</p>
           </b-form-group>
 
           <b-form-group
@@ -129,15 +129,15 @@
             label-cols-sm="3"
             label-align-sm="right"
           >
-            <b-form-radio-group
+            <!-- <b-form-radio-group
               v-if="editable2"
               id="radio-group-2"
               v-model="form.loe"
               :options="options"
               :aria-describedby="ariaDescribedby2"
               name="radio-options2"
-            ></b-form-radio-group>
-            <p v-else>{{ form.loe }}</p>
+            ></b-form-radio-group> -->
+            <p :aria-describedby="ariaDescribedby2">{{ form.loe }}</p>
           </b-form-group>
 
           <b-form-group
@@ -147,15 +147,15 @@
             label-cols-sm="3"
             label-align-sm="right"
           >
-            <b-form-radio-group
+            <!-- <b-form-radio-group
               v-if="editable2"
               id="radio-group-3"
               v-model="form.it"
               :options="options"
               :aria-describedby="ariaDescribedby3"
               name="radio-options3"
-            ></b-form-radio-group>
-            <p v-else>{{ form.it }}</p>
+            ></b-form-radio-group> -->
+            <p :aria-describedby="ariaDescribedby3">{{ form.it }}</p>
           </b-form-group>
           </b-card-body>
         </b-collapse>
@@ -170,7 +170,7 @@
         <!-- </b-form-group> -->
       </b-card>
       <br>
-      <b-button variant="outline-primary" style="background-color: #17C1FB; color: white" @click="postUserData">Submit</b-button>
+      <!-- <b-button variant="outline-primary" @click="postUserData">Submit</b-button> -->
       <!-- <b-button variant="outline-primary" @click="getUserData">Get Details</b-button> -->
       <!-- <b-card v-if="usersPresent" class="mt-3" header="Form Data Result">
         <pre class="m-0">{{ users }}</pre>
@@ -188,6 +188,7 @@ import mainApi from '../apis/mainApi'
 import qs from 'qs'
 import axios from 'axios'
 // import authApi from '../apis/auth'
+// import store from '../store'
 export default {
   data() {
       return {
@@ -202,8 +203,8 @@ export default {
           { text: 'Training Team', value: 'Training Team'}
         ],
         duties: [
-          { text: 'Active', value: 'Active' },
-          { text: 'Inactive', value: 'Inactive' }
+          { text: 'Active', value: 'Service Member' },
+          { text: 'Inactive', value: 'Command Staff' }
         ],
         options: [
           { text: 'None', value: 'None' },
@@ -211,6 +212,8 @@ export default {
           { text: 'Proficient', value: 'Proficient'},
           { text: 'Expert', value: 'Expert' }
         ],
+        uname: '',
+        upass: '',
         form: {
           age: '',
           first_name: '',
@@ -229,6 +232,9 @@ export default {
     created() {
       this.autho()
       // this.getUserData()
+      this.getUserDataInd()
+    },
+    mounted() {
     },
     methods: {
       redirectLogin () {
@@ -254,10 +260,19 @@ export default {
           console.log(localStorage.getItem('user-token'))
         });
       },
-      getUserData () {
-        mainApi.getServiceMembers().then((response) => {
-          this.usersPresent = true
-          this.users = response.data.records
+      getUserDataInd () {
+        this.uname = this.$store.state.email
+        this.upass = this.$store.state.password
+        mainApi.getServiceMemberInd(this.uname, this.upass).then((response) => {
+          this.form.age = response.data.records[0].Age__c,
+          this.form.first_name = response.data.records[0].FirstName__c,
+          this.form.last_name = response.data.records[0].LastName__c,
+          this.form.name = response.data.records[0].Name,
+          this.form.rank = response.data.records[0].Rank__c,
+          this.form.duty = response.data.records[0].Duty__c,
+          this.form.tac = response.data.records[0].TAC__c,
+          this.form.loe = response.data.records[0].LoE__c,
+          this.form.it = response.data.records[0].IT__c
         })
       },
       postUserData() {
@@ -314,12 +329,10 @@ export default {
 select#nested-city.custom-select {
   border: none;
   background-color: #25405e;
-  color: white;
 }
 select#nested-country.custom-select {
   border: none;
   background-color: #25405e;
-  color: white;
 }
 .custom-control-input {
   background-color: #25405e;

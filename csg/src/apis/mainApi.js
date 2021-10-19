@@ -63,7 +63,11 @@ export default class UserForm {
   }
 
   static checkLogin (name, password) {
-    return http.get("data/v52.0/query?q=SELECT Id From ServiceMember__c WHERE Name ='" + name +"' AND Password__c='"+ password +"'");
+    return http.get("data/v52.0/query?q=SELECT Id, isAdmin__c From ServiceMember__c WHERE Name ='" + name +"' AND Password__c='"+ password +"'");
+  }
+
+  static getServiceMemberInd(uname,upass) {
+    return http.get("data/v52.0/query?q=SELECT Id, FirstName__c, LastName__c, Name, AGE__c, RANK__c, DUTY__c, TAC__c, LOE__c, IT__c From ServiceMember__c WHERE Name ='" + uname +"' AND Password__c='"+ upass +"'")
   }
 
   static getCountsService () {

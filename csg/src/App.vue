@@ -14,11 +14,13 @@
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
-  color: #2c3e50;
+  background-color: #18365D;
+  color: #17C1FB;
 }
 
 #nav {
   padding: 30px;
+  background-color: #18365D;
 }
 
 #nav a {
@@ -29,4 +31,15 @@
 #nav a.router-link-exact-active {
   color: #42b983;
 }
+html {
+  background-color: #18365D;
+}
+label {
+  color: #17C1FB;
+}
+.custom-control-input {
+  background-color: #2c3e50;
+}
+
+
 </style>
