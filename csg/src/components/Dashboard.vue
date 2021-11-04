@@ -111,7 +111,7 @@ export default {
         skillChosen: '',
         skillVal: '',
         rankVal: '',
-        fields: ['FirstName__c', 'LastName__c','Age__c', 'Duty__c', 'LoE__c', 'Rank__c', 'IT__c', 'TAC__c'],
+        fields: ['FirstName__c', 'LastName__c','Age__c', 'Rank__c','Duty__c','LoE__c' , 'IT__c', 'TAC__c'],
         ranks: [
           { text: 'Name', value: 'Name' },
           { text: 'Command Staff', value: 'Command Staff' },
